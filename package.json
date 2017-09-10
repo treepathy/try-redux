@@ -1,0 +1,16 @@
+{
+  "name": "try-redux",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0"
+  },
+  "scripts": {
+    "start": "babel-node app.js"
+  }
+}
