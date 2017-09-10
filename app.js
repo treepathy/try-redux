@@ -2,36 +2,27 @@ import { createStore, combineReducers } from 'redux'
 
 // Action Types
 const INSERT_NUMBER = 'INSERT_NUMBER'
-const REMOVE_NUMBER = 'REMOVE_NUMBER'
+const REMOVE_INDEX = 'REMOVE_INDEX'
 const SET_NAME = 'SET_NAME'
 
 // Action Creators of above Action Types
-const insertActionCreator = value => {
-  console.log(`Insering ${value} in numbers`)
-  return {
-    type: INSERT_NUMBER,
-    payload: value
-  }
-}
+const insertNumber = value => ({
+  type: INSERT_NUMBER,
+  payload: value
+})
 
-const removeActionCreator = idx => {
-  console.log(`Removing index ${idx} from numbers`)
-  return {
-    type: REMOVE_NUMBER,
-    payload: idx
-  }
-}
+const removeIndex = idx => ({
+  type: REMOVE_INDEX,
+  payload: idx
+})
 
-const setNameActionCreator = name => {
-    console.log(`Setting name as ${name}`)
-    return {
-      type: SET_NAME,
-      payload: name
-    }
-}
+const setName = name => ({
+  type: SET_NAME,
+  payload: name
+})
 
 // Reducers for State Attributes
-const numbersReducer = (state = [], action) => {
+const numbers = (state = [], action) => {
   switch (action.type) {
     case INSERT_NUMBER:
       return [
@@ -39,15 +30,19 @@ const numbersReducer = (state = [], action) => {
           action.payload
         ]
       break;
-    case REMOVE_NUMBER:
-      return state.filter( (elem, idx) => idx !== action.payload )
+    case REMOVE_INDEX:
+      // return state.filter( (elem, idx) => idx !== action.payload )
+      return [
+        ...state.slice(0, action.payload),
+        ...state.slice(action.payload + 1)
+      ]
       break;
     default:
       return state
   }
 }
 
-const nameReducer = (state = '', action) => {
+const name = (state = '', action) => {
   switch (action.type) {
     case SET_NAME:
       return action.payload
@@ -59,8 +54,8 @@ const nameReducer = (state = '', action) => {
 
 // Redux State Container
 const store = createStore(combineReducers({
-  numbers: numbersReducer,
-  name: nameReducer
+  numbers,
+  name
 }))
 
 // Subscribing to State to listen for changes
@@ -69,14 +64,14 @@ store.subscribe(() => {
 })
 
 // Dispatching Actions
-store.dispatch(insertActionCreator(5))
-store.dispatch(insertActionCreator(10))
-store.dispatch(insertActionCreator(15))
-store.dispatch(insertActionCreator(5))
-store.dispatch(insertActionCreator(10))
-store.dispatch(insertActionCreator(15))
-store.dispatch(setNameActionCreator('Dracarys'))
-store.dispatch(removeActionCreator(2))
-store.dispatch(removeActionCreator(1))
-store.dispatch(removeActionCreator(0))
-store.dispatch(setNameActionCreator('BEND THE KNEE'))
+store.dispatch(insertNumber(5))
+store.dispatch(insertNumber(10))
+store.dispatch(insertNumber(15))
+store.dispatch(insertNumber(5))
+store.dispatch(insertNumber(10))
+store.dispatch(insertNumber(15))
+store.dispatch(setName('Dracarys'))
+store.dispatch(removeIndex(2))
+store.dispatch(removeIndex(1))
+store.dispatch(removeIndex(0))
+store.dispatch(setName('BEND THE KNEE'))
