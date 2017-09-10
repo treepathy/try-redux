@@ -63,7 +63,7 @@ const store = createStore(combineReducers({
   name: nameReducer
 }))
 
-// Subsribing to State to listen for changes
+// Subscribing to State to listen for changes
 store.subscribe(() => {
   console.log('State -> ', store.getState(), '\n')
 })
